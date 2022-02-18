@@ -15,20 +15,23 @@ const NowPlaying = () => {
 
     const getRandomNumber = () => {
         //top 5 trending list
-        const number = Math.floor(Math.random() * 6);
+        const number = Math.floor(Math.random() * 11);
         setRandomNumber(number);
     }
 
     const fetchNowPlaying = async () => {
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
             res => {
-                getRandomNumber();
                 //console.log(res.data.results);
                 setResult(res.data.results[randomNumber]);
-                console.log(result);
             }
         )
     }
+
+    useEffect(() => {
+        getRandomNumber();
+        //eslint-disable-next-line
+    }, [])
 
     useEffect(() => {
         fetchNowPlaying();
@@ -41,7 +44,9 @@ const NowPlaying = () => {
     return (
         <Wrapper>
             <img className='banner' src={`https://image.tmdb.org/t/p/original/${result?.backdrop_path}`} alt='banner'/> 
-            <ImageFade />
+            <ImageFadeLeft />
+            <ImageFadeBottom />
+            {result && <> 
             <BannerContent>
                 <p className='header'>Start Watching</p>
                 <h3 className='movie-name'>{result?.original_title}</h3>
@@ -53,7 +58,9 @@ const NowPlaying = () => {
                     <div className='button play'><PlayFill className='icon'/><p>Play</p></div>
                     <div className='button details'><ArrowRightShort className='icon'/><p>Details</p></div>
                 </Buttons>
-                </BannerContent>
+            </BannerContent>
+            </>}
+
         </Wrapper>
     )
 }
@@ -92,10 +99,18 @@ p {
 }
 `
 
-const ImageFade = styled.div`
+const ImageFadeBottom = styled.div`
 width: 100%;
 height: 100%;
-background: linear-gradient(to right,#0c1e2b8a,black);
+background: linear-gradient(to bottom, transparent, #000000a1);
+position: absolute;
+top: 0;
+`
+
+const ImageFadeLeft = styled.div`
+width: 100%;
+height: 100%;
+background: linear-gradient(to left, #0c1e2b36, black);
 position: absolute;
 top: 0;
 `

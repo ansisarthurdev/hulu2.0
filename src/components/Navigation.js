@@ -40,12 +40,12 @@ const Navigation = () => {
                 <Person className='icon' />
             </Left>
             <Right>
-                <img src='https://upload.wikimedia.org/wikipedia/commons/e/e4/Hulu_Logo.svg' alt='logo'/>
+                <Link to='/'><img src='https://upload.wikimedia.org/wikipedia/commons/e/e4/Hulu_Logo.svg' alt='logo'/></Link>
             </Right>
             </Top>
             <Bottom>
                 <div className='genre-list'>
-                    {genres.map(item => <Link key={item} to={`/${item}`}><GenreSelection>{item}</GenreSelection></Link>)}
+                    {genres.map(item => <Link key={item} to={`/categories/${item}`}><GenreSelection>{item}</GenreSelection></Link>)}
                 </div>
                 <div className='bottom-fade'></div>
             </Bottom>
@@ -61,7 +61,6 @@ text-align: center;
 display: flex;
 align-self: center;
 transition: .2s linear;
-height: 25px;
 opacity: 1;
 
 :hover {
@@ -79,6 +78,7 @@ color: white;
 display: flex;
 overflow: scroll;
 margin-bottom: 20px;
+align-items: center;
 
 a {
     color: white;
@@ -98,6 +98,7 @@ a {
     top: 0;
     right: 0;
     background: linear-gradient(to right, transparent, #0C1E2B);
+    pointer-events: none;
 }
 `
 
