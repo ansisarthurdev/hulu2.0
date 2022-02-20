@@ -10,20 +10,23 @@ const Movie = ({key, poster, title, release, vote, description}) => {
 
     //truncate text
     const truncate = (input) => {
-        if(width < 688){
-            return input?.length > 180 ? `${input?.substring(0, 180)}...` : input
-        } else {
-            return input?.length > 100 ? `${input?.substring(0, 100)}...` : input
+        if(width < 741 && width > 660){
+            let size = 130;
+            return input?.length > size ? `${input?.substring(0, size)}...` : input
+        } else if (width < 659) {
+            let size = 240;
+            return input?.length > size ? `${input?.substring(0, size)}...` : input
+        } else if (width > 741) {
+            let size = 180;
+            return input?.length > size ? `${input?.substring(0, size)}...` : input
         }
     };
 
     //window width
     const [width, setWidth] = useState(window.innerWidth);
 
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize());
-    }, []);
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", () => handleResize());
 
     return (
         <Wrapper>
@@ -103,7 +106,7 @@ const MovieInfo = styled.div`
 padding: 0 5%;
 
 p {
-    opacity: .7;
+    opacity: .4;
     font-size: .8rem;
     transition: .4s ease-in-out;
 }

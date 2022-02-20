@@ -140,6 +140,10 @@ const Left = styled.div`
     transition: .2s linear;
     opacity: 1;
 
+    &:nth-child(6) {
+        margin-right: 0;
+    }
+
     @media only screen and (max-width: 540px) {
     margin-right: 20px;
     }
