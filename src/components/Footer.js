@@ -17,7 +17,7 @@ const Footer = () => {
         <Top>
             <TopItem className='browse'>
                 <h3>Browse</h3>
-                <div className='lists'>
+                <div className='lists browse-lists'>
                     <ul className='list'>
                         <li><Link to='#'>Streaming Library</Link></li>
                         <li><Link to='#'>Live TV</Link></li>
@@ -152,6 +152,8 @@ h3 {
 
 .lists {
     display: flex;
+    flex-wrap: wrap;
+    margin-right: 10px;
 }
 
 ul {
@@ -178,6 +180,15 @@ li {
         }
     }
 }
+
+.browse-lists {
+    @media only screen and (max-width: 820px) {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-row-gap: 20px;
+    }
+}
+
 `
 
 const Top = styled.div`
@@ -203,7 +214,7 @@ grid-template-areas:
 }
 
 @media only screen and (max-width: 1015px) {
-    grid-template-columns: 30% 20% 50%;
+    grid-template-columns: 30% 30% 40%;
     grid-template-areas: 
     "browse browse browse"
     "help about .";
@@ -222,6 +233,7 @@ const Container = styled.div`
 padding: 0 4%;
 margin: 30px 0 0 0;
 background-color: #EBEDF2;
+overflow-x: hidden;
 `
 
 export default Footer
