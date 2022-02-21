@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 //icons 
@@ -12,21 +12,24 @@ import { Person } from '@styled-icons/bootstrap/Person';
 //react router
 import { Link } from "react-router-dom";
 
+//axios
+import axios from "axios";
+
 const Navigation = () => {
 
-    const genres = [
-        'Trending',
-        'Top Rated',
-        'Action',
-        'Comedy',
-        'Horror',
-        'Romance',
-        'Mystery',
-        'SciFi',
-        'Western',
-        'Animation',
-        'TV Movies'
-    ]
+    const [genres, setGenres] = useState([]);
+
+    const fetchCategories = () => {
+        axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(
+            res => {
+                setGenres(res.data.genres);
+            }
+        )
+    }
+
+    useEffect(() => {
+        fetchCategories();
+    }, [])
 
     return (
         <Container>
@@ -45,7 +48,7 @@ const Navigation = () => {
             </Top>
             <Bottom>
                 <div className='genre-list'>
-                    {genres.map(item => <Link key={item} to={`/categories/${item}`}><GenreSelection>{item}</GenreSelection></Link>)}
+                    {genres?.map(item => <Link key={item.id} to={`/categories/${item.name}/${item.id}`}><GenreSelection>{item.name}</GenreSelection></Link>)}
                 </div>
                 <div className='bottom-fade'></div>
             </Bottom>

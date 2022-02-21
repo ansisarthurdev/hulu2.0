@@ -14,7 +14,7 @@ const MoviePoster = ({poster}) => {
 
     return (
         <Wrapper>
-            <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut" animateOnce="true">
+            <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut">
             <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt='Movie-Poster' />
             <PlayButton className='play-button'><PlayFill className='icon'/> <p>Play</p></PlayButton>
             <DetailsButton className='details-button'><ArrowRightShort className='icon'/> <p>Details</p></DetailsButton>

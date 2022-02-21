@@ -5,41 +5,48 @@ import styled from 'styled-components';
 import MoviePoster from '../components/MoviePoster';
 import Movie from '../components/Movie';
 
+//api
 import axios from 'axios';
 
-const Home = () => {
+//router
+import { useParams, useNavigate } from 'react-router-dom';
 
-    const [nowPlaying, setNowPlaying] = useState([]);
-    const [popular, setPopular] = useState([]);
+const Category = () => {
 
-    const fetchData = async () => {
-        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
+    const params = useParams();
+    const navigate = useNavigate();
+
+    const [movies, setMovies] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+
+    const fetchCategory = async () => {
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US&with_genres=${params.id}`).then(
             res => {
-                //console.log(res.data.results);
-                setNowPlaying(res.data.results);
-            }
-        )
-
-        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
-            res => {
-                //console.log(res.data.results);
-                setPopular(res.data.results);
+                console.log(res.data.results);
+                setMovies(res.data.results);
+                setLoaded(true);
             }
         )
     }
 
     useEffect(() => {
-        fetchData();
+        setLoaded(false);
+        fetchCategory();
         //eslint-disable-next-line
-    }, [])
+    }, [params])
+
+    useEffect(() => {
+        if(loaded && movies?.length === 0){
+            navigate('/');
+        }
+    }, [loaded])
 
     return (
         <Container>
-            <Heading>Now Playing</Heading>
+            <Heading>Discover - {params?.name}</Heading>
             <MoviePosterContainer>
-                {nowPlaying.map(movie => (
+                {movies.map(movie => (
                     <MoviePoster 
-                        key={movie?.id}
                         poster={movie?.poster_path}
                     />
                 ))}
@@ -47,7 +54,7 @@ const Home = () => {
 
             <Heading style={{marginTop: 5}}>Browse More</Heading>
             <MovieContainer>
-                {popular.map(movie => (
+                {movies.map(movie => (
                     <Movie
                         key={movie?.id}
                         poster={movie?.backdrop_path}
@@ -100,4 +107,4 @@ color: white;
 
 `
 
-export default Home
+export default Category

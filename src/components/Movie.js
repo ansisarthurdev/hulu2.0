@@ -9,7 +9,7 @@ import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';
 
-const Movie = ({key, poster, title, release, vote, description}) => {
+const Movie = ({poster, title, release, vote, description}) => {
 
     //truncate text
     const truncate = (input) => {
