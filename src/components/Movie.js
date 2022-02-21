@@ -6,6 +6,9 @@ import { StarFill } from '@styled-icons/bootstrap/StarFill'
 import { PlayFill } from '@styled-icons/bootstrap/PlayFill'
 import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 
+//scroll animation
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const Movie = ({key, poster, title, release, vote, description}) => {
 
     //truncate text
@@ -30,6 +33,7 @@ const Movie = ({key, poster, title, release, vote, description}) => {
 
     return (
         <Wrapper>
+            <ScrollAnimation animateIn="bounceIn">
             <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt='Movie-Poster' />
                 <div className='movie-description'>
                     <MovieInfo className='movie-info'>
@@ -45,6 +49,7 @@ const Movie = ({key, poster, title, release, vote, description}) => {
                     </MovieInfoHidden>
                 </div>
             <BottomFade/>
+            </ScrollAnimation>
         </Wrapper>
     )
 }

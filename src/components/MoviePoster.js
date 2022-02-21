@@ -5,14 +5,21 @@ import styled from 'styled-components';
 import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 import { PlayFill } from '@styled-icons/bootstrap/PlayFill'
 
+//scroll animation
+import ScrollAnimation from 'react-animate-on-scroll';
+import "animate.css/animate.min.css";
+
+
 const MoviePoster = ({poster}) => {
 
     return (
         <Wrapper>
+            <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut" animateOnce="true">
             <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt='Movie-Poster' />
             <PlayButton className='play-button'><PlayFill className='icon'/> <p>Play</p></PlayButton>
             <DetailsButton className='details-button'><ArrowRightShort className='icon'/> <p>Details</p></DetailsButton>
             <BottomFade/>
+            </ScrollAnimation>
         </Wrapper>
     )
 }

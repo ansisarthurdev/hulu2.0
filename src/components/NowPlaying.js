@@ -8,6 +8,9 @@ import { StarFill } from '@styled-icons/bootstrap/StarFill'
 import { PlayFill } from '@styled-icons/bootstrap/PlayFill'
 import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 
+//scroll animation
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const NowPlaying = () => {
 
     const [randomNumber, setRandomNumber] = useState('');
@@ -48,16 +51,16 @@ const NowPlaying = () => {
             <ImageFadeBottom />
             {result && <> 
             <BannerContent>
-                <p className='header'>Start Watching</p>
-                <h3 className='movie-name'>{result?.original_title}</h3>
-                <p className='movie-description'>
+                <ScrollAnimation animateIn="fadeIn" animateOnce="true"><p className='header'>Start Watching</p></ScrollAnimation>
+                <ScrollAnimation animateIn="fadeIn" animateOnce="true" delay="400"><h3 className='movie-name'>{result?.original_title}</h3></ScrollAnimation>
+                <ScrollAnimation animateIn="fadeIn" animateOnce="true" delay="800"><p className='movie-description'>
                 {truncate(result?.overview)}
-                </p>
-                <p className='movie-ratings'>{result?.release_date} • <StarFill className='icon'/> {result?.vote_average}</p>
-                <Buttons>
+                </p></ScrollAnimation>
+                <ScrollAnimation animateIn="fadeIn" animateOnce="true" delay="1200"><p className='movie-ratings'>{result?.release_date} • <StarFill className='icon'/> {result?.vote_average}</p></ScrollAnimation>
+                <ScrollAnimation animateIn="fadeIn" animateOnce="true" delay="1600"><Buttons>
                     <div className='button play'><PlayFill className='icon'/><p>Play</p></div>
                     <div className='button details'><ArrowRightShort className='icon'/><p>Details</p></div>
-                </Buttons>
+                </Buttons></ScrollAnimation>
             </BannerContent>
             </>}
 
