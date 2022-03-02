@@ -11,6 +11,9 @@ import axios from 'axios';
 //router
 import { useParams, useNavigate } from 'react-router-dom';
 
+//now playing
+import NowPlaying from '../components/NowPlaying';
+
 const Category = () => {
 
     const params = useParams();
@@ -22,7 +25,7 @@ const Category = () => {
     const fetchCategory = async () => {
         axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US&with_genres=${params.id}`).then(
             res => {
-                console.log(res.data.results);
+                //console.log(res.data.results);
                 setMovies(res.data.results);
                 setLoaded(true);
             }
@@ -43,6 +46,9 @@ const Category = () => {
 
     return (
         <Container>
+            <NowPlaying 
+                id={params?.id}
+            />
             <Heading>Discover - {params?.name}</Heading>
             <MoviePosterContainer>
                 {movies.map(movie => (

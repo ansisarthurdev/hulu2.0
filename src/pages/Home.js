@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+//now playing
+import NowPlaying from '../components/NowPlaying';
+
 //movie poster
 import MoviePoster from '../components/MoviePoster';
 import Movie from '../components/Movie';
@@ -35,6 +38,7 @@ const Home = () => {
 
     return (
         <Container>
+            <NowPlaying />
             <Heading>Now Playing</Heading>
             <MoviePosterContainer>
                 {nowPlaying.map(movie => (

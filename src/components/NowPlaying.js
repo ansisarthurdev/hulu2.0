@@ -11,10 +11,11 @@ import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';
 
-const NowPlaying = () => {
+const NowPlaying = ({ id }) => {
 
     const [randomNumber, setRandomNumber] = useState('');
     const [result, setResult] = useState('');
+
 
     const getRandomNumber = () => {
         //top 5 trending list
@@ -23,12 +24,21 @@ const NowPlaying = () => {
     }
 
     const fetchNowPlaying = async () => {
-        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
-            res => {
-                //console.log(res.data.results);
-                setResult(res.data.results[randomNumber]);
-            }
-        )
+        if(id){
+            axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US&with_genres=${id}`).then(
+                res => {
+                    //console.log(res.data.results);
+                    setResult(res.data.results[randomNumber]);
+                }
+            )
+        } else {
+            axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
+                res => {
+                    //console.log(res.data.results);
+                    setResult(res.data.results[randomNumber]);
+                }
+            )
+        }
     }
 
     useEffect(() => {
@@ -43,6 +53,10 @@ const NowPlaying = () => {
 
     //truncate text
     const truncate = (input) => input?.length > 150 ? `${input?.substring(0, 150)}...` : input;
+
+    useEffect(() => {
+        getRandomNumber();
+    }, [id])
 
     return (
         <Wrapper>

@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navigation />
-      <NowPlaying />
+
         <Routes>
           <Route path="*" element={<NotFound />}></Route>
           <Route path="/" element={<Home />}></Route>
