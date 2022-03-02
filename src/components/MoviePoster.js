@@ -9,15 +9,21 @@ import { PlayFill } from '@styled-icons/bootstrap/PlayFill'
 import ScrollAnimation from 'react-animate-on-scroll';
 import "animate.css/animate.min.css";
 
+//router
+import { Link } from "react-router-dom";
 
-const MoviePoster = ({poster}) => {
+const MoviePoster = ({id, poster}) => {
 
     return (
         <Wrapper>
             <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut">
             <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt='Movie-Poster' />
             <PlayButton className='play-button'><PlayFill className='icon'/> <p>Play</p></PlayButton>
-            <DetailsButton className='details-button'><ArrowRightShort className='icon'/> <p>Details</p></DetailsButton>
+            <Link to={`/movie/${id}`}>
+            <DetailsButton className='details-button'>
+                <ArrowRightShort className='icon'/> <p>Details</p>
+            </DetailsButton>
+            </Link>
             <BottomFade/>
             </ScrollAnimation>
         </Wrapper>
@@ -76,6 +82,7 @@ z-index: 20;
 box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 transition: .4 ease-in-out;
 opacity: 0;
+color: white;
 
 :hover {
     background: white;

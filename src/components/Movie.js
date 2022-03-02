@@ -9,7 +9,10 @@ import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';
 
-const Movie = ({poster, title, release, vote, description}) => {
+//router
+import { Link } from "react-router-dom";
+
+const Movie = ({id, poster, title, release, vote, description}) => {
 
     //truncate text
     const truncate = (input) => {
@@ -43,7 +46,9 @@ const Movie = ({poster, title, release, vote, description}) => {
                     <MovieInfoHidden className='movie-info-hidden'>
                         <p className='movie-ratings'>{release} • <StarFill className='icon'/> {vote}</p>
                         <div className='buttons'>
+                            <Link to={`/movie/${id}`}>
                             <div className='button' style={{marginRight: 5}}><ArrowRightShort className='icon'/><p>Details</p></div>
+                            </Link>
                             <div className='button'><PlayFill className='icon'/><p>Play</p></div>
                         </div>
                     </MovieInfoHidden>
@@ -62,6 +67,10 @@ const MovieInfoHidden = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+
+    a {
+        text-decoration: none;
+    }
 
     .buttons {
         display: flex;
@@ -83,6 +92,7 @@ const MovieInfoHidden = styled.div`
         display: flex;
         align-items: center;
         background: #d3d3d352;
+        color: white;
 
         padding: 5px 15px 5px 10px;
         cursor: pointer;

@@ -44,6 +44,7 @@ const Home = () => {
                 {nowPlaying.map(movie => (
                     <MoviePoster 
                         key={movie?.id}
+                        id={movie?.id}
                         poster={movie?.poster_path}
                     />
                 ))}
@@ -54,6 +55,7 @@ const Home = () => {
                 {popular.map(movie => (
                     <Movie
                         key={movie?.id}
+                        id={movie?.id}
                         poster={movie?.backdrop_path}
                         title={movie?.original_title}
                         release={movie?.release_date}

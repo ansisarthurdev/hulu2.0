@@ -53,6 +53,8 @@ const Category = () => {
             <MoviePosterContainer>
                 {movies.map(movie => (
                     <MoviePoster 
+                        key={movie?.id}
+                        id={movie?.id}
                         poster={movie?.poster_path}
                     />
                 ))}
@@ -63,6 +65,7 @@ const Category = () => {
                 {movies.map(movie => (
                     <Movie
                         key={movie?.id}
+                        id={movie?.id}
                         poster={movie?.backdrop_path}
                         title={movie?.original_title}
                         release={movie?.release_date}
@@ -78,6 +81,7 @@ const Category = () => {
 const MovieContainer = styled.div`
 display: flex;
 flex-wrap: wrap;
+flex-direction: row-reverse;
 position: relative;
 padding: 20px 0;
 margin: 0 3.5% 0 4%;

@@ -11,6 +11,9 @@ import { ArrowRightShort } from '@styled-icons/bootstrap/ArrowRightShort'
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';
 
+//router
+import { Link } from 'react-router-dom';
+
 const NowPlaying = ({ id }) => {
 
     const [randomNumber, setRandomNumber] = useState('');
@@ -60,7 +63,7 @@ const NowPlaying = ({ id }) => {
 
     return (
         <Wrapper>
-            <img className='banner' src={`https://image.tmdb.org/t/p/original/${result?.backdrop_path}`} alt='banner'/> 
+            <img className='banner' src={`https://image.tmdb.org/t/p/original/${result?.backdrop_path}`}/> 
             <ImageFadeLeft />
             <ImageFadeBottom />
             {result && <> 
@@ -71,9 +74,16 @@ const NowPlaying = ({ id }) => {
                 {truncate(result?.overview)}
                 </p></ScrollAnimation>
                 <ScrollAnimation animateIn="fadeIn" animateOnce={true} delay={1200}><p className='movie-ratings'>{result?.release_date} • <StarFill className='icon'/> {result?.vote_average}</p></ScrollAnimation>
-                <ScrollAnimation animateIn="fadeIn" animateOnce={true} delay={1600}><Buttons>
+                <ScrollAnimation animateIn="fadeIn" animateOnce={true} delay={1600}>
+                <Buttons>
                     <div className='button play'><PlayFill className='icon'/><p>Play</p></div>
-                    <div className='button details'><ArrowRightShort className='icon'/><p>Details</p></div>
+                    
+                    <div className='button details'>
+                        <Link to={`/movie/${result?.id}`}>
+                        <ArrowRightShort className='icon'/><p>Details</p>
+                        </Link>
+                    </div>
+             
                 </Buttons></ScrollAnimation>
             </BannerContent>
             </>}
@@ -100,9 +110,20 @@ cursor: pointer;
 border-radius: 3px;
 transition: .2s linear;
 
+a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
 :hover {
     background: white;
     color: black;
+
+    a {
+        color: black;
+    }
 }
 
 p {
