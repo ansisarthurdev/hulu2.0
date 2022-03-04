@@ -17,6 +17,9 @@ import NowPlaying from '../components/NowPlaying';
 //loading
 import ReactLoading from 'react-loading';
 
+//scroll animation
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const Category = () => {
 
     const params = useParams();
@@ -24,13 +27,15 @@ const Category = () => {
 
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
     const fetchCategory = async () => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US&with_genres=${params.id}`).then(
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}&region=US&with_genres=${params.id}`).then(
             res => {
                 //console.log(res.data.results);
                 setMovies(res.data.results);
                 setLoading(false);
+                setPage(page => page + 1);
             }
         )
     }
@@ -41,10 +46,20 @@ const Category = () => {
     }, [params])
 
     useEffect(() => {
-        if(loading && movies?.length === 0){
+        if(!loading && movies?.length === 0){
             navigate('/');
         }
     }, [loading])
+
+    const fetchMoreData = async () => {
+        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}&region=US`).then(
+            res => {
+                //console.log(res.data.results);
+                setMovies(movies => [...movies, ...res.data.results])
+                setPage(page => page + 1);
+            }
+        )
+    }
 
     return (
         <Container>
@@ -81,11 +96,34 @@ const Category = () => {
                     />
                 ))} 
             </MovieContainer>  
+
+            <ScrollAnimation animateIn="fadeIn"><Button onClick={() => fetchMoreData()}><p>Load more...</p></Button></ScrollAnimation>
             </>}
           
         </Container>
     )
 }
+
+const Button = styled.button`
+    -webkit-appearance: none;
+    border: none;
+    background: #1ce783;
+    display: flex;
+    margin: 0 auto;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    opacity: .7;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .8rem;
+
+    :hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+`
 
 const MovieContainer = styled.div`
 display: flex;

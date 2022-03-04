@@ -13,11 +13,15 @@ import ReactLoading from 'react-loading';
 
 import axios from 'axios';
 
+//scroll animation
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const Home = () => {
 
     const [nowPlaying, setNowPlaying] = useState([]);
     const [popular, setPopular] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
     const fetchData = async () => {
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
@@ -27,19 +31,36 @@ const Home = () => {
             }
         )
 
-        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
+        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}&region=US`).then(
             res => {
                 //console.log(res.data.results);
                 setPopular(res.data.results);
                 setLoading(false);
+                setPage(page => page + 1);
             }
         )
+
+        /*axios.get(`https://api.themoviedb.org/3/search/movie?query='te'&api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
+            res => {
+                console.log(res.data.results);
+            }
+        )*/
     }
 
     useEffect(() => {
         fetchData();
         //eslint-disable-next-line
     }, [])
+
+    const fetchMoreData = async () => {
+        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}&region=US`).then(
+            res => {
+                //console.log(res.data.results);
+                setPopular(popular => [...popular, ...res.data.results])
+                setPage(page => page + 1);
+            }
+        )
+    }
 
     return (
         <Container>
@@ -73,11 +94,34 @@ const Home = () => {
                         description={movie?.overview}
                     />
                 ))} 
-            </MovieContainer>  
+            </MovieContainer>
+
+            <ScrollAnimation animateIn="fadeIn"><Button onClick={() => fetchMoreData()}><p>Load more...</p></Button></ScrollAnimation>
             </>}          
         </Container>
     )
 }
+
+const Button = styled.button`
+    -webkit-appearance: none;
+    border: none;
+    background: #1ce783;
+    display: flex;
+    margin: 0 auto;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    opacity: .7;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .8rem;
+
+    :hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+`
 
 const MovieContainer = styled.div`
 display: flex;
