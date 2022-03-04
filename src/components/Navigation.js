@@ -17,6 +17,17 @@ import axios from "axios";
 
 const Navigation = () => {
 
+    //add shadow to navigation when scrolled
+    window.onscroll = () => addShadowNav();
+
+    const addShadowNav = () => {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.querySelector('#navigation').style.boxShadow = '-1px 10px 14px -2px rgba(0,0,0,0.35)';
+    } else {
+        document.querySelector('#navigation').style.boxShadow = '';
+    }
+    }
+
     const [genres, setGenres] = useState([]);
 
     const fetchCategories = () => {
@@ -32,7 +43,7 @@ const Navigation = () => {
     }, [])
 
     return (
-        <Container>
+        <Container id='navigation'>
             <Top>
             <Left>
                 <Link to='/'><Home className='icon' /></Link>
@@ -160,7 +171,9 @@ const Left = styled.div`
 
 const Container = styled.div`
 background-color: #0C1E2B;
-position: relative;
+position: sticky;
+top: 0;
+z-index: 1000;
 `
 
 export default Navigation

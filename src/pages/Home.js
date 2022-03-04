@@ -8,12 +8,16 @@ import NowPlaying from '../components/NowPlaying';
 import MoviePoster from '../components/MoviePoster';
 import Movie from '../components/Movie';
 
+//loading
+import ReactLoading from 'react-loading';
+
 import axios from 'axios';
 
 const Home = () => {
 
     const [nowPlaying, setNowPlaying] = useState([]);
     const [popular, setPopular] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const fetchData = async () => {
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
@@ -27,6 +31,7 @@ const Home = () => {
             res => {
                 //console.log(res.data.results);
                 setPopular(res.data.results);
+                setLoading(false);
             }
         )
     }
@@ -38,6 +43,11 @@ const Home = () => {
 
     return (
         <Container>
+            {loading ? 
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <ReactLoading type={"bubbles"} color={'#1ce783'}/>
+            </div>
+            : <>
             <NowPlaying />
             <Heading>Now Playing</Heading>
             <MoviePosterContainer>
@@ -63,7 +73,8 @@ const Home = () => {
                         description={movie?.overview}
                     />
                 ))} 
-            </MovieContainer>            
+            </MovieContainer>  
+            </>}          
         </Container>
     )
 }

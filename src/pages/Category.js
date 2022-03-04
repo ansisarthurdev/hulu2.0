@@ -14,38 +14,45 @@ import { useParams, useNavigate } from 'react-router-dom';
 //now playing
 import NowPlaying from '../components/NowPlaying';
 
+//loading
+import ReactLoading from 'react-loading';
+
 const Category = () => {
 
     const params = useParams();
     const navigate = useNavigate();
 
     const [movies, setMovies] = useState([]);
-    const [loaded, setLoaded] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const fetchCategory = async () => {
         axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US&with_genres=${params.id}`).then(
             res => {
                 //console.log(res.data.results);
                 setMovies(res.data.results);
-                setLoaded(true);
+                setLoading(false);
             }
         )
     }
 
     useEffect(() => {
-        setLoaded(false);
         fetchCategory();
         //eslint-disable-next-line
     }, [params])
 
     useEffect(() => {
-        if(loaded && movies?.length === 0){
+        if(loading && movies?.length === 0){
             navigate('/');
         }
-    }, [loaded])
+    }, [loading])
 
     return (
         <Container>
+            {loading ? 
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <ReactLoading type={"bubbles"} color={'#1ce783'}/>
+            </div>
+            :<>
             <NowPlaying 
                 id={params?.id}
             />
@@ -73,7 +80,9 @@ const Category = () => {
                         description={movie?.overview}
                     />
                 ))} 
-            </MovieContainer>            
+            </MovieContainer>  
+            </>}
+          
         </Container>
     )
 }
@@ -88,6 +97,10 @@ margin: 0 3.5% 0 4%;
 
 @media only screen and (max-width: 670px) {
     margin: 0 2% 0 4%;
+}
+
+@media only screen and (max-width: 687px) {
+    flex-direction: column-reverse;
 }
 
 ::-webkit-scrollbar {

@@ -15,26 +15,31 @@ import { Users } from '@styled-icons/fa-solid/Users'
 import { Link } from '@styled-icons/boxicons-regular/Link'
 import { Web } from '@styled-icons/foundation/Web'
 
-
-
 //components
 import Company from '../components/Company';
+
+//loading
+import ReactLoading from 'react-loading';
 
 const MovieInfo = () => {
   const params = useParams();
 
   const [movie, setMovie] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const fetchData = () => {
     axios.get(`https://api.themoviedb.org/3/movie/${params?.id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(
       res => {
-        console.log(res.data);
+        //console.log(res.data);
         setMovie(res.data);
+        setLoading(false);
       }
     )
   }
 
   useEffect(() => {
+    //scroll to top
+    window.scrollTo(0,0);
     fetchData();
     //eslint-disable-next-line
 }, [params])
@@ -42,6 +47,11 @@ const MovieInfo = () => {
   return (
     <Container>
 
+    {loading ? 
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <ReactLoading type={"bubbles"} color={'#1ce783'}/>
+    </div>
+    :<>
     <Banner>
       <BannerImg src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} />
       <ImageFadeLeft />
@@ -106,7 +116,7 @@ const MovieInfo = () => {
         </Right>
       </Description>
     </MovieDescription>
-
+    </>}
     </Container>
   )
 }
@@ -171,8 +181,9 @@ overflow: hidden;
   padding: 20px;
 
   @media only screen and (max-width: 600px) {
-    width: 92%;
+    width: 100%;
     margin: 20px 0 0 0; 
+    box-sizing: border-box;
   }
 
   h5 {
