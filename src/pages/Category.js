@@ -41,6 +41,7 @@ const Category = () => {
     }
 
     useEffect(() => {
+        window.scrollTo(0,0);
         fetchCategory();
         //eslint-disable-next-line
     }, [params])
@@ -115,7 +116,7 @@ const Button = styled.button`
     cursor: pointer;
     transition: .2s ease-in-out;
     opacity: .7;
-    text-transform: uppercase;
+    font-variant: all-petite-caps;
     font-weight: bold;
     font-size: .8rem;
 

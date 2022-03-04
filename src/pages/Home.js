@@ -39,15 +39,10 @@ const Home = () => {
                 setPage(page => page + 1);
             }
         )
-
-        /*axios.get(`https://api.themoviedb.org/3/search/movie?query='te'&api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&region=US`).then(
-            res => {
-                console.log(res.data.results);
-            }
-        )*/
     }
 
     useEffect(() => {
+        window.scrollTo(0,0);
         fetchData();
         //eslint-disable-next-line
     }, [])
@@ -113,7 +108,7 @@ const Button = styled.button`
     cursor: pointer;
     transition: .2s ease-in-out;
     opacity: .7;
-    text-transform: uppercase;
+    font-variant: all-petite-caps;
     font-weight: bold;
     font-size: .8rem;
 

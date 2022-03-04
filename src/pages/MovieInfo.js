@@ -42,7 +42,7 @@ const MovieInfo = () => {
     window.scrollTo(0,0);
     fetchData();
     //eslint-disable-next-line
-}, [params])
+  }, [params])
 
   return (
     <Container>
