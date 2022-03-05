@@ -74,6 +74,7 @@ const Navigation = () => {
 
     useEffect(() => {
         search();
+        //eslint-disable-next-line
     }, [searchValue])
 
     return (

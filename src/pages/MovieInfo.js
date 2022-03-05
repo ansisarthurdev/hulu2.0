@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 //router
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';

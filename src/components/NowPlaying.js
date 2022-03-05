@@ -63,7 +63,7 @@ const NowPlaying = ({ id }) => {
 
     return (
         <Wrapper>
-            <img className='banner' src={`https://image.tmdb.org/t/p/original/${result?.backdrop_path}`}/> 
+            <img className='banner' src={`https://image.tmdb.org/t/p/original/${result?.backdrop_path}`} alt='banner'/> 
             <ImageFadeLeft />
             <ImageFadeBottom />
             {result && <> 

@@ -50,6 +50,8 @@ const Category = () => {
         if(!loading && movies?.length === 0){
             navigate('/');
         }
+
+        //eslint-disable-next-line
     }, [loading])
 
     const fetchMoreData = async () => {

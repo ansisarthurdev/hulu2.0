@@ -19,7 +19,7 @@ const SearchItem = ({id, title, poster, voteAverage }) => {
     <Container>
         <Link to={`/movie/${id}`}>
         <div className='left'>
-            {poster !== null && <img src={`https://image.tmdb.org/t/p/original/${poster}`}/>}
+            {poster !== null && <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt='poster'/>}
         </div>
         <div className='right'>
             <h5>{truncate(title)}</h5>
