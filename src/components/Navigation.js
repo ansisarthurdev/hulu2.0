@@ -23,6 +23,9 @@ import { useDebounce } from 'use-debounce';
 //scroll animation
 import ScrollAnimation from 'react-animate-on-scroll';
 
+//components 
+import SearchItem from './SearchItem';
+
 const Navigation = () => {
 
     //add shadow to navigation when scrolled
@@ -95,7 +98,7 @@ const Navigation = () => {
                 <div className='bottom-fade'></div>
             </Bottom>
 
-            <SearchContainer style={{top: searchOpen ? '0' : '-300px', height: searchResults ? '300px' : '150px'}}>
+            <SearchContainer style={{top: searchOpen ? '0' : '-440px', height: searchResults ? '440px' : '150px'}}>
                 <Close className='icon' onClick={() => setSearchOpen(false)}/>
                 <div style={{position: 'relative', top: '60px'}}>
                 <TextInputContainer>
@@ -109,7 +112,19 @@ const Navigation = () => {
                             <p style={{color: 'white', display: 'flex', justifyContent: 'center', fontVariant: 'all-petite-caps', padding: 10}}>we couldn't find anything while searching for {searchValue}...</p>
                             : 
                             <>
-                            there is data
+                            
+                            <div style={{display: 'flex', flexWrap: 'wrap'}}> 
+                            {searchResults.map(result => (
+                                <SearchItem 
+                                    key={result?.id}
+                                    id={result?.id}
+                                    title={result?.original_title}
+                                    poster={result?.poster_path}
+                                    voteAverage={result?.vote_average}
+                                />
+                            ))}
+                            </div>
+
                             </>}
                         </SearchResultContainer>
                     </ScrollAnimation>
@@ -125,8 +140,44 @@ const SearchResultContainer = styled.div`
 position: relative;
 background: #ffffff14;
 width: calc(90% + 20px);
-height: 160px;
+height: 300px;
 margin: 0 auto;
+overflow-y: scroll;
+overflow-x: hidden;
+
+::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e1e1e1;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #cecece;
+  }
+  ::-webkit-scrollbar-track {
+    background: #666666;
+    border: 0px none #ffffff;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: #666666;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: #333333;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
 `
 
 const TextInputContainer = styled.div`
